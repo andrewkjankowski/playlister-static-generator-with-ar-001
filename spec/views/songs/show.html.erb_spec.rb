@@ -18,6 +18,7 @@ describe "songs/show.html.erb", type: :view do
   end
 
   it "displays the song info" do
+    song = @song
     rendered = ERB.new(html).result(binding)
 
     expect(rendered).to match(/artist - song_1 - genre/)

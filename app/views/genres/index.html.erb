@@ -1,0 +1,15 @@
+<!-- The main page of playlister -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Playlister 2</title>
+  </head>
+  <body>
+    <h1>Genres</h1>
+    <ul>
+      <% Genre.all.each do |genre| %>
+        <li><ahref="genres/<%= genre.to_slug %>.html"><%= genre.name %></a></li>
+      <% end %>
+    </ul>
+  </body>
+</html>

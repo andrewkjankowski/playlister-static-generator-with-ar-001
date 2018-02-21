@@ -1,4 +1,5 @@
 require "spec_helper"
+require 'pry'
 
 describe "artists/show.html.erb", type: :view do
   let(:abs_path) { "#{Dir.pwd}/app/views" }
@@ -14,6 +15,8 @@ describe "artists/show.html.erb", type: :view do
       Song.create(name: "Our Song", genre: @genres[0], artist: @artist),
       Song.create(name: "Blank Space", genre: @genres[1], artist: @artist)
     ]
+    artist = @artist
+    @rendered = ERB.new(html).result(binding)
   end
 
   after(:each) do
@@ -22,23 +25,21 @@ describe "artists/show.html.erb", type: :view do
     @artist.delete
   end
 
-  let(:rendered) { ERB.new(html).result(binding) }
-
   it "displays the artist's name" do
-    expect(rendered).to match(/Taylor Swift/)
+    expect(@rendered).to match(/Taylor Swift/)
   end
 
   it "displays the artist's genres" do
-    expect(rendered).to match(/country/)
-    expect(rendered).to match(/pop/)
-    expect(rendered).to match(/genres\/country\.html/)
-    expect(rendered).to match(/genres\/pop\.html/)
+    expect(@rendered).to match(/country/)
+    expect(@rendered).to match(/pop/)
+    expect(@rendered).to match(/genres\/country\.html/)
+    expect(@rendered).to match(/genres\/pop\.html/)
   end
 
   it "displays the artist's songs" do
-    expect(rendered).to match(/songs\/blank-space\.html/)
-    expect(rendered).to match(/songs\/our-song\.html/)
-    expect(rendered).to match(/Taylor Swift - Blank Space - pop/)
-    expect(rendered).to match(/Taylor Swift - Our Song - country/)
+    expect(@rendered).to match(/songs\/blank-space\.html/)
+    expect(@rendered).to match(/songs\/our-song\.html/)
+    expect(@rendered).to match(/Taylor Swift - Blank Space - pop/)
+    expect(@rendered).to match(/Taylor Swift - Our Song - country/)
   end
 end

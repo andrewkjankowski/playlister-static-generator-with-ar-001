@@ -14,6 +14,9 @@ describe "genres/show.html.erb", type: :view do
       Song.create(name: "Our Song", genre: @genre, artist: @artists[0]),
       Song.create(name: "I Saw the Light", genre: @genre, artist: @artists[1])
     ]
+
+    genre = @genre
+    @rendered = ERB.new(html).result(binding)
   end
 
   after(:each) do
@@ -22,23 +25,21 @@ describe "genres/show.html.erb", type: :view do
     @genre.delete
   end
 
-  let(:rendered) { ERB.new(html).result(binding) }
-
   it "displays the genre's name" do
-    expect(rendered).to match(/Country/)
+    expect(@rendered).to match(/Country/)
   end
 
   it "displays the genre's artists" do
-    expect(rendered).to match(/Taylor Swift/)
-    expect(rendered).to match(/Hank Williams/)
-    expect(rendered).to match(/artists\/taylor-swift\.html/)
-    expect(rendered).to match(/artists\/hank-williams\.html/)
+    expect(@rendered).to match(/Taylor Swift/)
+    expect(@rendered).to match(/Hank Williams/)
+    expect(@rendered).to match(/artists\/taylor-swift\.html/)
+    expect(@rendered).to match(/artists\/hank-williams\.html/)
   end
 
   it "displays the genre's songs" do
-    expect(rendered).to match(/songs\/i-saw-the-light\.html/)
-    expect(rendered).to match(/songs\/our-song\.html/)
-    expect(rendered).to match(/Hank Williams - I Saw the Light - Country/)
-    expect(rendered).to match(/Taylor Swift - Our Song - Country/)
+    expect(@rendered).to match(/songs\/i-saw-the-light\.html/)
+    expect(@rendered).to match(/songs\/our-song\.html/)
+    expect(@rendered).to match(/Hank Williams - I Saw the Light - Country/)
+    expect(@rendered).to match(/Taylor Swift - Our Song - Country/)
   end
 end
